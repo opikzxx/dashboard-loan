@@ -10,9 +10,11 @@ import { BsSpeedometer2 } from "react-icons/bs";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { LiaLayerGroupSolid } from "react-icons/lia";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs"; // Import arrow icons
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [isProductOpen, setIsProductOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Toggle dropdown state when clicking on the "Product" button
   const toggleProductDropdown = () => {
@@ -50,7 +52,9 @@ const Sidebar = () => {
           {/* Dropdown menu */}
           {isProductOpen && (
             <div className="pl-14 mt-2">
-              <ButtonSidebar>Bank Product</ButtonSidebar>
+              <ButtonSidebar onClick={() => navigate("/product")}>
+                Bank Product
+              </ButtonSidebar>
               <ButtonSidebar>Product</ButtonSidebar>
               <ButtonSidebar>Category Product</ButtonSidebar>
             </div>
