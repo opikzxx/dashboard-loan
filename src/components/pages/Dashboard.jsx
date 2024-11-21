@@ -9,9 +9,8 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { GiBank } from "react-icons/gi";
 
 import CardDisplay from "../elements/CradDisplay";
-// import progresscircle dari react-tremor
-import { ProgressCircle } from "@tremor/react";
 import BankApprovalChart from "../elements/BankApprovalChart";
+import Timeline from "../elements/TImeline";
 
 const Dashboard = () => {
   return (
@@ -62,9 +61,9 @@ const Dashboard = () => {
         </div>
       </Navbar>
 
-      <div className="grid md:grid-cols-6 gap-6 p-2 mt-2 md:p-6">
+      <div className="grid md:grid-cols-6 gap-6 p-2 md:mt-[250px] md:p-6 ">
         <div className="md:col-span-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <CardDisplay
               name="CONTACT"
               icon={<BsCardText size={40} />}
@@ -82,7 +81,7 @@ const Dashboard = () => {
           <div className="bg-white w-full shadow-md rounded-md mt-6 p-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col justify-center items-center border-r pr-4">
-                <h2 className="text-black text-center font-bold text-sm md:text-md mb-2 h-10">
+                <h2 className="flex justify-center items-center text-black text-center font-bold text-sm md:text-md mb-2 h-10">
                   PINJAMAN DISETUJUI
                 </h2>
                 <div className="flex flex-col items-center">
@@ -98,7 +97,7 @@ const Dashboard = () => {
                         cy="18"
                       />
                       <circle
-                        className="text-blue-500"
+                        className="text-[#17A9E2]"
                         stroke="currentColor"
                         strokeWidth="4"
                         strokeDasharray="40,100"
@@ -121,7 +120,7 @@ const Dashboard = () => {
 
               <div className="flex flex-col items-center pl-4">
                 <div className="flex justify-center items-center w-full mb-2">
-                  <h2 className="text-black font-bold text-sm md:text-md mb-2 h-10">
+                  <h2 className="flex justify-center items-center text-black font-bold text-sm md:text-md mb-2 h-10">
                     TARGET
                   </h2>
                   {/* <button className="text-blue-500">
@@ -154,7 +153,7 @@ const Dashboard = () => {
                         cy="18"
                       />
                       <circle
-                        className="text-blue-500"
+                        className="text-[#17A9E2]"
                         stroke="currentColor"
                         strokeWidth="4"
                         strokeDasharray="280,100"
@@ -177,12 +176,17 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white w-full shadow-md rounded-md mt-6 p-4">
+          <div className="bg-white w-full h-[300px] shadow-md rounded-md mt-6">
+            <h2 className="text-black text-center font-bold text-sm md:text-md mb-2 pt-6">
+              Top 5 Bank Approval Tertinggi
+            </h2>
             <BankApprovalChart />
           </div>
         </div>
         <div className="md:col-span-2">
-          <div className="bg-white h-28 shadow-md rounded-md"></div>
+          <div className="bg-white shadow-md rounded-md">
+            <Timeline />
+          </div>
         </div>
       </div>
     </MainLayout>
