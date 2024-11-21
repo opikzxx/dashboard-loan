@@ -27,7 +27,10 @@ const Sidebar = () => {
         <img src={logo} alt="logo" className="w-18 h-18" />
       </div>
       <div className="flex flex-col gap-1 text-left px-2">
-        <ButtonSidebar icon={<AiOutlineHome size={30} />}>
+        <ButtonSidebar
+          onClick={() => navigate("/")}
+          icon={<AiOutlineHome size={30} />}
+        >
           Dashboard
         </ButtonSidebar>
         <ButtonSidebar icon={<BsCardText size={30} />}>Contact</ButtonSidebar>
