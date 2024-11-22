@@ -1,85 +1,178 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation
 import logo from "../assets/logo.png";
 import ButtonSidebar from "./elements/ButtonSidebar";
 import { AiOutlineHome } from "react-icons/ai";
-import { BsCardText, BsChevronRight } from "react-icons/bs";
+import {
+  BsCardText,
+  BsChevronRight,
+  BsChevronDown,
+  BsChevronUp,
+} from "react-icons/bs";
 import { FaRegFile } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { GiBank } from "react-icons/gi";
 import { BsSpeedometer2 } from "react-icons/bs";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { LiaLayerGroupSolid } from "react-icons/lia";
-import { BsChevronDown, BsChevronUp } from "react-icons/bs"; // Import arrow icons
-import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [isProductOpen, setIsProductOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current path
 
-  // Toggle dropdown state when clicking on the "Product" button
-  const toggleProductDropdown = () => {
-    setIsProductOpen((prevState) => !prevState); // toggle the current state
+  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!isSidebarCollapsed);
   };
 
+  // Toggle dropdown state for "Product"
+  const toggleProductDropdown = () => {
+    setIsProductOpen((prevState) => !prevState);
+  };
+
+  // Helper function to check if the current path matches
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <div className="bg-white shadow-md fixed top-0 left-0 w-14 md:w-[270px] h-screen overflow-y-auto z-50">
+    <div
+      className={`bg-white shadow-md fixed top-0 left-0 h-screen overflow-y-auto z-[99] ${
+        isSidebarCollapsed ? "w-14" : "w-[270px]"
+      }`}
+    >
       <div className="flex justify-center items-center mb-10">
         <img src={logo} alt="logo" className="w-18 h-18" />
       </div>
       <div className="flex flex-col gap-1 text-left px-2">
+        {/* Dashboard Button */}
         <ButtonSidebar
           onClick={() => navigate("/")}
           icon={<AiOutlineHome size={30} />}
+          className={isActive("/") ? "bg-[#17A9E2] text-white" : ""}
+          collapsed={isSidebarCollapsed}
         >
           Dashboard
         </ButtonSidebar>
-        <ButtonSidebar icon={<BsCardText size={30} />}>Contact</ButtonSidebar>
-        <ButtonSidebar icon={<FaRegFile size={30} />}>Loan</ButtonSidebar>
 
-        {/* Product with dropdown */}
-        <div className="">
+        {/* Contact Button */}
+        <ButtonSidebar
+          icon={<BsCardText size={30} />}
+          className={isActive("/contact") ? "bg-blue-500 text-white" : ""}
+          collapsed={isSidebarCollapsed}
+        >
+          Contact
+        </ButtonSidebar>
+
+        {/* Loan Button */}
+        <ButtonSidebar
+          icon={<FaRegFile size={30} />}
+          className={isActive("/loan") ? "bg-blue-500 text-white" : ""}
+          collapsed={isSidebarCollapsed}
+        >
+          Loan
+        </ButtonSidebar>
+
+        {/* Product with Dropdown */}
+        <div>
           <ButtonSidebar
             icon={<HiOutlineShoppingBag size={30} />}
+            collapsed={isSidebarCollapsed}
             onClick={toggleProductDropdown}
+            className={
+              isActive("/product") || isProductOpen
+                ? "bg-[#17A9E2] text-white"
+                : ""
+            }
           >
             <div className="flex justify-between items-center w-full">
               <span>Product</span>
               {isProductOpen ? (
-                <BsChevronUp size={20} className="ml-14" /> // Up arrow when dropdown is open
+                <BsChevronUp size={20} className="ml-14" />
               ) : (
-                <BsChevronDown size={20} className="ml-14" /> // Down arrow when dropdown is closed
+                <BsChevronDown size={20} className="ml-14" />
               )}
             </div>
           </ButtonSidebar>
 
-          {/* Dropdown menu */}
+          {/* Dropdown Items */}
           {isProductOpen && (
             <div className="pl-14 mt-2">
-              <ButtonSidebar onClick={() => navigate("/product")}>
+              <ButtonSidebar
+                collapsed={isSidebarCollapsed}
+                onClick={() => navigate("/product")}
+              >
                 Bank Product
               </ButtonSidebar>
-              <ButtonSidebar>Product</ButtonSidebar>
-              <ButtonSidebar>Category Product</ButtonSidebar>
+              <ButtonSidebar collapsed={isSidebarCollapsed}>
+                Product
+              </ButtonSidebar>
+              <ButtonSidebar collapsed={isSidebarCollapsed}>
+                Category Product
+              </ButtonSidebar>
             </div>
           )}
         </div>
 
-        <ButtonSidebar icon={<GiBank size={30} />}>Bank</ButtonSidebar>
-        <ButtonSidebar icon={<BsSpeedometer2 size={30} />}>
+        {/* Bank Button */}
+        <ButtonSidebar
+          icon={<GiBank size={30} />}
+          className={isActive("/bank") ? "bg-blue-500 text-white" : ""}
+          collapsed={isSidebarCollapsed}
+        >
+          Bank
+        </ButtonSidebar>
+
+        {/* Credit Scoring Button */}
+        <ButtonSidebar
+          icon={<BsSpeedometer2 size={30} />}
+          className={
+            isActive("/credit-scoring") ? "bg-blue-500 text-white" : ""
+          }
+          collapsed={isSidebarCollapsed}
+        >
           Credit Scoring
         </ButtonSidebar>
-        <ButtonSidebar icon={<FaRegCircleQuestion size={30} />}>
-          {`FAQ's`}
+
+        {/* FAQ Button */}
+        <ButtonSidebar
+          icon={<FaRegCircleQuestion size={30} />}
+          collapsed={isSidebarCollapsed}
+          className={isActive("/faq") ? "bg-blue-500 text-white" : ""}
+        >
+          {` `}FAQ's
         </ButtonSidebar>
-        <ButtonSidebar icon={<LiaLayerGroupSolid size={30} />}>
+
+        {/* Pipeline Button */}
+        <ButtonSidebar
+          collapsed={isSidebarCollapsed}
+          icon={<LiaLayerGroupSolid size={30} />}
+          className={isActive("/pipeline") ? "bg-blue-500 text-white" : ""}
+        >
           Pipeline
         </ButtonSidebar>
-        <ButtonSidebar icon={<LiaLayerGroupSolid size={30} />}>
+
+        <ButtonSidebar
+          collapsed={isSidebarCollapsed}
+          icon={<LiaLayerGroupSolid size={30} />}
+          className={
+            isActive("/pipeline-developer") ? "bg-blue-500 text-white" : ""
+          }
+        >
           Pipeline Developer
         </ButtonSidebar>
-        <div className="block md:hidden">
-          <div className="flex justify-center items-center text-white font-bold bg-blue-800 w-10 h-10 md:w-12 md:h-12 rounded-full p-3">
-            <BsChevronRight size={20} />
+
+        {/* Collapse Button for Mobile */}
+        <div className="flex justify-center items-center">
+          <div className="block md:hidden" onClick={toggleSidebar}>
+            <div className="flex justify-center items-center text-white font-bold bg-blue-800 w-10 h-10 md:w-12 md:h-12 rounded-full p-3">
+              <BsChevronRight
+                size={20}
+                className={`transition-transform duration-300 ${
+                  isSidebarCollapsed ? "rotate-180" : ""
+                }`}
+              />
+            </div>
           </div>
         </div>
       </div>
